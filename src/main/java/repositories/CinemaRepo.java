@@ -20,15 +20,16 @@ public class CinemaRepo {
 
 
     //add a cinema
-    public boolean add(String name,String username,String password)  {
+    public boolean add(Cinema cinema)  {
+
 
         int insertCheck=0;
         try {
             String insert="insert into cinema(name,username,password) values (?,?,?)";
             PreparedStatement preparedStatement = ConnectionProvider.setConnection().prepareStatement(insert);
-            preparedStatement.setString(1,name);
-            preparedStatement.setString(2,username);
-            preparedStatement.setString(3,password);
+            preparedStatement.setString(1,cinema.getName());
+            preparedStatement.setString(2,cinema.getUsername());
+            preparedStatement.setString(3,cinema.getPassword());
 
             insertCheck=preparedStatement.executeUpdate();
 
@@ -106,8 +107,30 @@ public class CinemaRepo {
 
 
 
-    //show cinema info
-    public Cinema showInfo(int cinemaID){
+    //show info of a cinema
+    public Cinema showInfo(String username){
+        String showInfo="select * from cinema where username=?";
 
+        Cinema cinema=new Cinema();
+        try {
+            PreparedStatement preparedStatement=ConnectionProvider.setConnection().prepareStatement(showInfo);
+            preparedStatement.setString(1,username);
+            ResultSet resultSet=preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+
+                cinema.setId(resultSet.getInt(1));
+                cinema.setName(resultSet.getString(2));
+                cinema.setUsername(resultSet.getString(3));
+                cinema.setPassword(resultSet.getString(4));
+                cinema.setValidation(resultSet.getBoolean(5));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return cinema;
     }
 }

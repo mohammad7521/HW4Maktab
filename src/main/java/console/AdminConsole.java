@@ -26,14 +26,22 @@ public class AdminConsole {
                 int userEntry = scanner.nextInt();
                 switch (userEntry) {
                     case 1:
-                        System.out.println("enter the cinema ID");
+                        System.out.println("enter the cinema ID: ");
                         int cinemaId = scanner.nextInt();
-                        CinemaService.validate(cinemaId);
+                        if (CinemaService.validate(cinemaId)){
+                            System.out.println("validation successful! ");
+                        }
+                        else System.out.println("cinema ID does not exist! ");
                         break;
 
                     case 2:
                         cinemaId = scanner.nextInt();
-                        CinemaService.invalidate(cinemaId);
+                        if (CinemaService.invalidate(cinemaId)){
+                            System.out.println("Invalidation successful! ");
+                        }
+                        else {
+                            System.out.println("cinema ID does not exist! ");
+                        }
                     case 0:
                         flag = false;
                         break;

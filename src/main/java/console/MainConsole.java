@@ -11,7 +11,7 @@ public class MainConsole {
 
         while (true) {
             System.out.println("1-Admin: ");
-            System.out.println("2-Client: ");
+            System.out.println("2-Viewer: ");
             System.out.println("3-Cinema: ");
 
             Scanner scanner = new Scanner(System.in);
@@ -22,9 +22,12 @@ public class MainConsole {
                     case 1:
                         AdminConsole.adminMenu();
                         break;
-//                    case 2:
-//                        ClientConsole.clientMenu();
-//                        break;
+                    case 2:
+                        ViewerConsole.viewerLogInMenu();
+                        break;
+                    case 3:
+                        CinemaConsole.cinemaLogInMenu();
+                        break;
                 }
             } catch (InputMismatchException e) {
                 System.out.println("please enter a number!");

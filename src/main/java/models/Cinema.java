@@ -57,4 +57,9 @@ public class Cinema {
     public void setValidation(boolean validation) {
         this.validation = validation;
     }
+
+
+
+    //constructor
+
 }

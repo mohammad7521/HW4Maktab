@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS admin(
 CREATE TABLE IF NOT EXISTS cinema(
     cinemaID serial primary  key,
     name varchar (20),
-    username varchar (30),
+    username varchar (30) unique,
     password varchar (20),
     validation boolean
 );
@@ -19,9 +19,7 @@ CREATE TABLE IF NOT EXISTS ticket (
     startTime Time,
     endingTime Time,
     movie varchar(20),
-    ViewerID int,
     cinemaID int,
-    foreign key (ViewerID) references viewer(viewerID),
     foreign key (cinemaID) references cinema(CinemaID),
     quantity int ,
     price int
@@ -36,3 +34,17 @@ create table if not exists viewer
     lastName  varchar(20)
 );
 
+
+CREATE TABLE IF NOT EXISTS viewer_ticket(
+    id serial primary key,
+    ticketID int,
+    viewerID int,
+    quantity int,
+    foreign key (ticketID) references ticket(id),
+    foreign key (viewerID) references viewer(viewerID)
+
+)
+
+
+
+insert into viewer_ticket(ticketID, viewerID, quantity) values (?,?,?);

@@ -1,7 +1,9 @@
 package repositories;
 import connection.ConnectionProvider;
 import models.Admin;
+import models.Cinema;
 import models.Ticket;
+import models.Viewer;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,18 +23,27 @@ public class ViewerRepo {
 
 
     //create new viewer
-    public boolean add(String username,String password,String firstName,String lastName) throws SQLException, ClassNotFoundException {
+    public boolean add(Viewer viewer) {
 
+        int insertCheck=0;
         String insert="INSERT INTO viewer (username,password,firstname,lastname) VALUES (?,?,?,?)";
 
-        PreparedStatement preparedStatement=ConnectionProvider.setConnection().prepareStatement(insert);
+        PreparedStatement preparedStatement= null;
+        try {
+            preparedStatement = ConnectionProvider.setConnection().prepareStatement(insert);
 
-        preparedStatement.setString(1,username);
-        preparedStatement.setString(2,password);
-        preparedStatement.setString(3,firstName);
-        preparedStatement.setString(4,lastName);
+            preparedStatement.setString(1,viewer.getUsername());
+            preparedStatement.setString(2,viewer.getPassword());
+            preparedStatement.setString(3,viewer.getFirstName());
+            preparedStatement.setString(4,viewer.getLastName());
+            insertCheck= preparedStatement.executeUpdate();;
 
-        return  preparedStatement.executeUpdate()>0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return insertCheck>0;
 
     }
 
@@ -76,5 +87,30 @@ public class ViewerRepo {
 
 
 
-    //
+    //show info of a viewer
+    public Viewer showInfo(String username){
+        String showInfo="select * from viewer where username=?";
+
+        Viewer viewer=new Viewer();
+        try {
+            PreparedStatement preparedStatement=ConnectionProvider.setConnection().prepareStatement(showInfo);
+            preparedStatement.setString(1,username);
+            ResultSet resultSet=preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+
+                viewer.setId(resultSet.getInt(1));
+                viewer.setUsername(resultSet.getString(2));
+                viewer.setPassword(resultSet.getString(3));
+                viewer.setFirstName(resultSet.getString(4));
+                viewer.setLastName(resultSet.getString(5));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return viewer;
+    }
 }
