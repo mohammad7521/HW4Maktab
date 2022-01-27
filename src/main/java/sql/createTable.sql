@@ -46,5 +46,5 @@ CREATE TABLE IF NOT EXISTS viewer_ticket(
 )
 
 
+update ticket set quantity=quantity-(?) where id=?
 
-insert into viewer_ticket(ticketID, viewerID, quantity) values (?,?,?);

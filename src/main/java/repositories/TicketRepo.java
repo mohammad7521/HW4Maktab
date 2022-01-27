@@ -86,7 +86,7 @@ public class TicketRepo {
     //reserve a ticket for a viewer
     public boolean reserve(int ticketID,int viewerID,int quantity){
         String reserve="insert into viewer_ticket(ticketID, viewerID, quantity) values (?,?,?)";
-        String quantityDeduct="update ticket set quantity=quantity-(?) where ticketID=?";
+        String quantityDeduct="update ticket set quantity=quantity-(?) where id=?";
 
         int resultCheck1=0;
         int resultCheck=0;

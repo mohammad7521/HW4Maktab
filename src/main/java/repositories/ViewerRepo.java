@@ -4,6 +4,7 @@ import models.Admin;
 import models.Cinema;
 import models.Ticket;
 import models.Viewer;
+import org.postgresql.util.PSQLException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

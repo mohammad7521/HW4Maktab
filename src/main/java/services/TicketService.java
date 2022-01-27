@@ -53,14 +53,18 @@ public class TicketService {
     //reserve a ticket based on ticketID
     public static boolean reserve(int ticketID,int viewerID,int quantity){
 
+        boolean reserveCheck=false;
 
         Ticket ticket=showInfo(ticketID);
         if (ticket.getMovieName()==null){
             throw new NullPointerException();
         }
         else {
-            return ticketRepo.reserve(ticketID, viewerID, quantity);
+            if (ticket.getQuantity() > quantity) {
+                reserveCheck=ticketRepo.reserve(ticketID, viewerID, quantity);
+            }
         }
+        return reserveCheck;
     }
 
 

@@ -30,11 +30,14 @@ public class AdminConsole {
                         int cinemaId = scanner.nextInt();
                         if (CinemaService.validate(cinemaId)){
                             System.out.println("validation successful! ");
+                            break;
                         }
                         else System.out.println("cinema ID does not exist! ");
                         break;
 
                     case 2:
+                        scanner.nextLine();
+                        System.out.println("enter the cinema ID");
                         cinemaId = scanner.nextInt();
                         if (CinemaService.invalidate(cinemaId)){
                             System.out.println("Invalidation successful! ");

@@ -16,7 +16,7 @@ public class ConnectionProvider {
 
         if (connection==null){
             Class.forName("org.postgresql.Driver");
-            connection=DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres","postgres","66426623");
+            connection=DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres","postgres","6642");
         }
         return connection;
     }

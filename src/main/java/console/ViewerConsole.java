@@ -98,7 +98,7 @@ public class ViewerConsole {
                             int quantity = scanner.nextInt();
                             if (TicketService.reserve(ticketID, viewer.getId(), quantity)) {
                                 System.out.println("ticket bought successfully");
-                            } else System.out.println("ticket id wrong!");
+                            } else System.out.println("ticket id wrong or bought out!");
                         } catch (NullPointerException e) {
                             System.out.println("ticket does not exist!");
                             break;
@@ -121,7 +121,7 @@ public class ViewerConsole {
                             if (TicketService.reserve(ticketID, viewer.getId(), quantity)) {
                                 System.out.println("ticket bought successfully");
                                 break;
-                            } else System.out.println("ticket id wrong!");
+                            } else System.out.println("ticket id wrong or bought out!");
                         } catch (NullPointerException e) {
                             System.out.println("ticket does not exist!");
                             break;
@@ -130,7 +130,11 @@ public class ViewerConsole {
                         try {
                             System.out.println("enter the date: ");
                             Date date=Date.valueOf(scanner.next());
-                            TicketService.showAll(date);
+                            ticketList=TicketService.showAll(date);
+                            for (int i = 0; i < ticketList.size(); i++) {
+                                System.out.println("ticket #" + i);
+                                System.out.println(ticketList.get(i).toString());
+                            }
                             try {
                                 System.out.println("select the ticket by id: ");
                                 int ticketID = scanner.nextInt();
@@ -138,7 +142,7 @@ public class ViewerConsole {
                                 int quantity = scanner.nextInt();
                                 if (TicketService.reserve(ticketID, viewer.getId(), quantity)) {
                                     System.out.println("ticket bought successfully");
-                                } else System.out.println("ticket id wrong!");
+                                } else System.out.println("ticket id wrong or bought out!");
                             } catch (NullPointerException e) {
                                 System.out.println("ticket does not exist!");
                                 break;
