@@ -84,31 +84,28 @@ public class TicketRepo {
 
 
     //reserve a ticket for a viewer
-    public boolean reserve(int ticketID,int viewerID,int quantity){
+    public void reserve(int ticketID,int viewerID,int quantity){
         String reserve="insert into viewer_ticket(ticketID, viewerID, quantity) values (?,?,?)";
         String quantityDeduct="update ticket set quantity=quantity-(?) where id=?";
 
-        int resultCheck1=0;
-        int resultCheck=0;
 
         try {
             PreparedStatement preparedStatement=ConnectionProvider.setConnection().prepareStatement(reserve);
             preparedStatement.setInt(1,ticketID);
             preparedStatement.setInt(2,viewerID);
             preparedStatement.setInt(3,quantity);
-            resultCheck1=preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
 
             PreparedStatement preparedStatement1=ConnectionProvider.setConnection().prepareStatement(quantityDeduct);
             preparedStatement1.setInt(1,quantity);
             preparedStatement1.setInt(2,ticketID);
-            resultCheck=preparedStatement.executeUpdate();
+            preparedStatement1.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return resultCheck>0 && resultCheck1>0;
     }
 
 

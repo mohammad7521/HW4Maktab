@@ -115,7 +115,7 @@ public class Ticket {
                 "\nstartTime: " + startTime +
                 "\nendingTime: " + endingTime +
                 "\nmovieName: " + movieName+
-                "\ncinema: " + cinema.getName() +
+                "\ncinema ID: " + cinema.getId() +
                 "\nquantity: " + quantity +
                 "\nprice: " + price +
                 '}';

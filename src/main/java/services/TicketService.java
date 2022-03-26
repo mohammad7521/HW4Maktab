@@ -1,5 +1,7 @@
 package services;
 
+import exceptionHandlers.NoSuchMovie;
+import exceptionHandlers.NotEnoughTicket;
 import models.Cinema;
 import models.Ticket;
 import models.Viewer;
@@ -51,20 +53,18 @@ public class TicketService {
 
 
     //reserve a ticket based on ticketID
-    public static boolean reserve(int ticketID,int viewerID,int quantity){
-
-        boolean reserveCheck=false;
+    public static void reserve(int ticketID,int viewerID,int quantity){
 
         Ticket ticket=showInfo(ticketID);
-        if (ticket.getMovieName()==null){
+        if (ticket.getMovieName()==null || ticket==null){
             throw new NullPointerException();
         }
         else {
-            if (ticket.getQuantity() > quantity) {
-                reserveCheck=ticketRepo.reserve(ticketID, viewerID, quantity);
+            if (ticket.getQuantity() < quantity) {
+                throw new NotEnoughTicket();
             }
+            else     ticketRepo.reserve(ticketID, viewerID, quantity);
         }
-        return reserveCheck;
     }
 
 
@@ -72,6 +72,12 @@ public class TicketService {
     //show tickets of a movie
     public static List<Ticket> showAll(String movieName){
 
+        List<Ticket>ticketList=showAll();
+
+        for (Ticket t:ticketList){
+            if (t.getMovieName().equals(movieName));
+            else throw new NoSuchMovie();
+        }
         return ticketRepo.showAll(movieName);
     }
 
@@ -91,4 +97,6 @@ public class TicketService {
 
         return ticketRepo.showAll(date);
     }
+
+
 }

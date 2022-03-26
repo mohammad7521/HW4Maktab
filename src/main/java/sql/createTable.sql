@@ -36,7 +36,6 @@ create table if not exists viewer
 
 
 CREATE TABLE IF NOT EXISTS viewer_ticket(
-    id serial primary key,
     ticketID int,
     viewerID int,
     quantity int,
@@ -44,7 +43,3 @@ CREATE TABLE IF NOT EXISTS viewer_ticket(
     foreign key (viewerID) references viewer(viewerID)
 
 )
-
-
-update ticket set quantity=quantity-(?) where id=?
-
